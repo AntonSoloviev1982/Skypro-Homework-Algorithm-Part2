@@ -38,20 +38,40 @@ public class ArraySorted {
         }
     }
 
+//    public static void sortSelection(Integer[] arr) {
+//        for (int i = 0; i < arr.length - 1; i++) {
+//            int idxMin = 0;
+//            int temp = 0;
+//            for (int j = i + 1; j < arr.length; j++) {
+//                if (arr[i] > arr[j]) {
+//                    idxMin = j;
+//                }
+//            }
+//            temp = arr[i];
+//            arr[i] = arr[idxMin];
+//            arr[idxMin] = temp;
+//        }
+//    }
+
+
     public static void sortSelection(Integer[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
-            int idxMin = 0;
-            int temp = 0;
+            int minElementIndex = i;
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] > arr[j]) {
-                    idxMin = j;
+                if (arr[j] < arr[minElementIndex]) {
+                    minElementIndex = j;
                 }
             }
-            temp = arr[i];
-            arr[i] = arr[idxMin];
-            arr[idxMin] = temp;
+            swapElements(arr, i, minElementIndex);
         }
     }
+
+    private static void swapElements(Integer[] arr, int indexA, int indexB) {
+        Integer tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
+    }
+
 }
 
 // 11, 5, 7, 98, 2, 6, 1
