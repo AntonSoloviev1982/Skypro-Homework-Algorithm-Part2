@@ -5,14 +5,23 @@ import java.util.Random;
 
 public class ArraySorted {
     public static void main(String[] args) {
-//        Integer[] array1 = generateRandomArray();
-//        Integer[] array2 = Arrays.copyOf(array1, array1.length);
-//        Integer[] array3 = array1.clone();
+        Integer[] array1 = generateRandomArray();
+        Integer[] array2 = Arrays.copyOf(array1, array1.length);
+        Integer[] array3 = array1.clone();
 
-        Integer[] array4 = {11, 5, 7, 98, 2, 6, 1};
-//        sortBubble(array4);
-        sortSelection(array4);
-        System.out.println(Arrays.toString(array4));
+        long start1 = System.currentTimeMillis();
+        sortBubble(array1);
+        System.out.println(System.currentTimeMillis() - start1);
+
+        long start2 = System.currentTimeMillis();
+        sortSelection(array2);
+        System.out.println(System.currentTimeMillis() - start2);
+
+        long start3 = System.currentTimeMillis();
+        sortInsertion(array3);
+        System.out.println(System.currentTimeMillis() - start3);
+
+
 
     }
 
@@ -38,41 +47,31 @@ public class ArraySorted {
         }
     }
 
-//    public static void sortSelection(Integer[] arr) {
-//        for (int i = 0; i < arr.length - 1; i++) {
-//            int idxMin = 0;
-//            int temp = 0;
-//            for (int j = i + 1; j < arr.length; j++) {
-//                if (arr[i] > arr[j]) {
-//                    idxMin = j;
-//                }
-//            }
-//            temp = arr[i];
-//            arr[i] = arr[idxMin];
-//            arr[idxMin] = temp;
-//        }
-//    }
-
-
     public static void sortSelection(Integer[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
-            int minElementIndex = i;
+            int idxMin = i;
             for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[minElementIndex]) {
-                    minElementIndex = j;
+                if (arr[idxMin] > arr[j]) {
+                    idxMin = j;
                 }
             }
-            swapElements(arr, i, minElementIndex);
+            int temp = arr[i];
+            arr[i] = arr[idxMin];
+            arr[idxMin] = temp;
         }
     }
 
-    private static void swapElements(Integer[] arr, int indexA, int indexB) {
-        Integer tmp = arr[indexA];
-        arr[indexA] = arr[indexB];
-        arr[indexB] = tmp;
+    public static void sortInsertion(Integer[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int temp = arr[i];
+            int j = i;
+            while (j > 0 && arr[j - 1] >= temp) {
+                arr[j] = arr[j - 1];
+                j--;
+            }
+            arr[j] = temp;
+        }
     }
 
-}
 
-// 11, 5, 7, 98, 2, 6, 1
-//
+}

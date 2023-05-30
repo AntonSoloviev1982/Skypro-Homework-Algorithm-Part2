@@ -1,6 +1,5 @@
 package com.example.skyprohomeworkalgorithmpart2;
 
-import com.example.skyprohomeworkalgorithmpart2.exception.ElementNotFoundException;
 import com.example.skyprohomeworkalgorithmpart2.exception.NoSuchIndexException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -192,6 +191,17 @@ public class IntegerArrayListTest {
         Assertions.assertThat(integerArrayList.get(2)).isEqualTo(3);
         integerArrayList.moveElementsToTheLeft(1);
         Assertions.assertThat(integerArrayList.get(1)).isEqualTo(3);
+    }
+
+    @Test
+    public void sortTest() {
+        integerArrayList.add(0, 99);
+        integerArrayList.add(1, 14);
+        integerArrayList.add(2, 8);
+
+        Assertions.assertThat(integerArrayList.toArray()).isEqualTo(new Integer[]{99, 14, 8, 1, 2, 3});
+        integerArrayList.sort(integerArrayList.getIntegerArrayList());
+        Assertions.assertThat(integerArrayList.toArray()).isEqualTo(new Integer[]{1, 2, 3, 8, 14, 99});
     }
 
 

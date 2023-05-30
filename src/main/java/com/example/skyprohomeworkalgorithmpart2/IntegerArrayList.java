@@ -96,13 +96,8 @@ public class IntegerArrayList implements IntegerList {
 
     @Override
     public boolean contains(Integer item) {
-        boolean result = false;
-        for (int i = 0; i < integerArrayList.length; i++) {
-            if (integerArrayList[i] == item) {
-                result = true;
-            }
-        }
-        return result;
+        sort(integerArrayList);
+        return binarySearch(integerArrayList, item);
     }
 
     @Override
@@ -139,16 +134,16 @@ public class IntegerArrayList implements IntegerList {
     @Override
     public boolean equals(IntegerArrayList otherList) {
 
-        if (this.getIntegerArrayList()==otherList.getIntegerArrayList())
+        if (this.getIntegerArrayList() == otherList.getIntegerArrayList())
             return true;
-        if (this.getIntegerArrayList()==null || otherList.getIntegerArrayList()==null)
+        if (this.getIntegerArrayList() == null || otherList.getIntegerArrayList() == null)
             return false;
 
         int length = this.getIntegerArrayList().length;
         if (otherList.getIntegerArrayList().length != length)
             return false;
 
-        for (int i=0; i<length; i++) {
+        for (int i = 0; i < length; i++) {
             if (!Objects.equals(this.getIntegerArrayList()[i], otherList.getIntegerArrayList()[i]))
                 return false;
         }
@@ -171,16 +166,29 @@ public class IntegerArrayList implements IntegerList {
 
     @Override
     public void clear() {
-        integerArrayList = Arrays.stream(integerArrayList).map(e -> e = null).toArray(Integer []::new);
+        integerArrayList = Arrays.stream(integerArrayList).map(e -> e = null).toArray(Integer[]::new);
     }
 
     @Override
     public Integer[] toArray() {
-        Integer [] newArray = integerArrayList.clone();
+        Integer[] newArray = integerArrayList.clone();
         return newArray;
     }
 
-
+    @Override
+    public void sort(Integer[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            int idxMin = i;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[idxMin] > arr[j]) {
+                    idxMin = j;
+                }
+            }
+            int temp = arr[i];
+            arr[i] = arr[idxMin];
+            arr[idxMin] = temp;
+        }
+    }
 
 
     public boolean isArrayFull() {
@@ -210,5 +218,25 @@ public class IntegerArrayList implements IntegerList {
             integerArrayList[i + 1] = null;
         }
     }
+
+    private boolean binarySearch(Integer[] arr, Integer element) {
+        int min = 0;
+        int max = arr.length - 1;
+        while (min <= max) {
+            int mid = (min + max) / 2;
+            if (element == arr[mid]) {
+                return true;
+            }
+            if (element < arr[mid]) {
+                max = mid - 1;
+            }
+            else {
+                min = mid + 1;
+            }
+        }
+        return false;
+    }
+
+
 
 }
